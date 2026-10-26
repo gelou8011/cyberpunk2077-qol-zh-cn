@@ -1,0 +1,8 @@
+* text=auto
+*.py text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.patch -text -whitespace
+*.asi binary
+*.archive binary
+payload/** -text whitespace=cr-at-eol

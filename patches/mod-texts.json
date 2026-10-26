@@ -1,0 +1,287 @@
+[
+  {
+    "path": "bin/x64/plugins/cyber_engine_tweaks/mods/flashlight/modules/settingsUI.lua",
+    "original_sha256": "a9c107183ce6a825fc7a9ceae7a70184563ead99c326091262b007d6e9ab0733",
+    "localized_sha256": "7773532870b4f177c3d4e49376473b6563e1a2925a46204bf979bbb32dcfbfad",
+    "output_newline": "crlf",
+    "replacements": [
+      {
+        "old": "\"Flashlight\"",
+        "new": "\"手电筒\"",
+        "count": 1
+      },
+      {
+        "old": "\"General Settings\"",
+        "new": "\"常规设置\"",
+        "count": 1
+      },
+      {
+        "old": "\"Size and range\"",
+        "new": "\"光束与照射范围\"",
+        "count": 1
+      },
+      {
+        "old": "\"Color\"",
+        "new": "\"颜色\"",
+        "count": 1
+      },
+      {
+        "old": "\"Brightness\"",
+        "new": "\"亮度\"",
+        "count": 1
+      },
+      {
+        "old": "\"Controls the brightness of the flashlight\"",
+        "new": "\"调整手电筒的亮度。\"",
+        "count": 1
+      },
+      {
+        "old": "\"Turn On / Off Time\"",
+        "new": "\"开关渐变时间\"",
+        "count": 1
+      },
+      {
+        "old": "\"Controls how longe the fade in / out duration is, when toggling the flashlight\"",
+        "new": "\"调整手电筒开关时逐渐亮起或熄灭的时间。\"",
+        "count": 1
+      },
+      {
+        "old": "\"Forward Offset\"",
+        "new": "\"向前偏移\"",
+        "count": 1
+      },
+      {
+        "old": "\"Changes the flashlight's forward offset, to prevent it from shining on the weapons barrel\"",
+        "new": "\"调整光源向前的偏移量，避免光线照在枪管上。\"",
+        "count": 1
+      },
+      {
+        "old": "\"Controller Support\"",
+        "new": "\"手柄支持\"",
+        "count": 1
+      },
+      {
+        "old": "\"Disables / Enables the controller support\"",
+        "new": "\"启用或禁用手柄快捷操作。长按十字键左侧可开关手电筒。\"",
+        "count": 1
+      },
+      {
+        "old": "\"Size\"",
+        "new": "\"光束角度\"",
+        "count": 1
+      },
+      {
+        "old": "\"Changes how big the flashlight's \\\"circle\\\" is\"",
+        "new": "\"调整照射光圈的大小。\"",
+        "count": 1
+      },
+      {
+        "old": "\"Falloff\"",
+        "new": "\"边缘柔和度\"",
+        "count": 1
+      },
+      {
+        "old": "\"Changes how softly the flashlight's beam fades off to the edges\"",
+        "new": "\"调整光束边缘逐渐变暗的柔和程度。\"",
+        "count": 1
+      },
+      {
+        "old": "\"Range\"",
+        "new": "\"照射距离\"",
+        "count": 1
+      },
+      {
+        "old": "\"Changes how far the flashlight lights up the environment\"",
+        "new": "\"调整手电筒能够照亮的距离。\"",
+        "count": 1
+      },
+      {
+        "old": "\"Custom\"",
+        "new": "\"自定义\"",
+        "count": 1
+      },
+      {
+        "old": "\"White\"",
+        "new": "\"白色\"",
+        "count": 1
+      },
+      {
+        "old": "\"Warm White\"",
+        "new": "\"暖白色\"",
+        "count": 1
+      },
+      {
+        "old": "\"Red\"",
+        "new": "\"红色\"",
+        "count": 2
+      },
+      {
+        "old": "\"Green\"",
+        "new": "\"绿色\"",
+        "count": 2
+      },
+      {
+        "old": "\"Blue\"",
+        "new": "\"蓝色\"",
+        "count": 2
+      },
+      {
+        "old": "\"Orange\"",
+        "new": "\"橙色\"",
+        "count": 1
+      },
+      {
+        "old": "\"Aqua\"",
+        "new": "\"青色\"",
+        "count": 1
+      },
+      {
+        "old": "\"Yellow\"",
+        "new": "\"黄色\"",
+        "count": 1
+      },
+      {
+        "old": "\"Color Preset\"",
+        "new": "\"颜色预设\"",
+        "count": 1
+      },
+      {
+        "old": "\"Select from one of the color presets, or create your own color\"",
+        "new": "\"选择预设颜色，或调整下方的红、绿、蓝分量来自定义颜色。\"",
+        "count": 1
+      },
+      {
+        "old": "\"The amount of red\"",
+        "new": "\"调整红色分量。\"",
+        "count": 1
+      },
+      {
+        "old": "\"The amount of green\"",
+        "new": "\"调整绿色分量。\"",
+        "count": 1
+      },
+      {
+        "old": "\"The amount of blue\"",
+        "new": "\"调整蓝色分量。\"",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "path": "bin/x64/plugins/cyber_engine_tweaks/mods/flashlight/init.lua",
+    "original_sha256": "ed5ec84c507c03c6e857d6846610df6dabd7ed454640cf6854cd4c36adc032e3",
+    "localized_sha256": "f4836501bc21ebf2f1ae4d28a1a6c9c91af397a82c0ea539ba29cd404dfedfbd",
+    "output_newline": "crlf",
+    "replacements": [
+      {
+        "old": "\"Toggle Flashlight\"",
+        "new": "\"开关手电筒\"",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "path": "bin/x64/plugins/cyber_engine_tweaks/mods/BetterLootMarkers/Modules/Settings.lua",
+    "original_sha256": "347b9af282527facddde5eb17fcbb13c8350998f5425e021aa82ddc37f7b7971",
+    "localized_sha256": "a880c1d3cd50c30be2b7c37db22305d9999d7327bc615aaa00af61ee2acc8a2d",
+    "output_newline": "crlf",
+    "replacements": [
+      {
+        "old": "\"BetterLootMarkers\"",
+        "new": "\"战利品标记###BetterLootMarkers\"",
+        "count": 1
+      },
+      {
+        "old": "\"Vertical Mode\"",
+        "new": "\"纵向排列\"",
+        "count": 1
+      },
+      {
+        "old": "\"Show Default Markers\"",
+        "new": "\"同时显示原版标记\"",
+        "count": 1
+      },
+      {
+        "old": "\"Marker Scaling\"",
+        "new": "\"标记大小\"",
+        "count": 1
+      },
+      {
+        "old": "\"Immersive Mode (Scanner Only)\"",
+        "new": "\"仅扫描时显示标记\"",
+        "count": 1
+      },
+      {
+        "old": "\"Show Item Counts\"",
+        "new": "\"显示物品数量\"",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "path": "bin/x64/plugins/cyber_engine_tweaks/mods/nativeSettings/init.lua",
+    "original_sha256": "c3db971bf2c3117f81ebe5e6586589e0495bea77632deb2685c55e4011d9d86c",
+    "localized_sha256": "c353a086a561377feee086aea71038210e12231e410251d015c814339916daf7",
+    "output_newline": "crlf",
+    "replacements": [
+      {
+        "old": "\"Mods\"",
+        "new": "\"模组\"",
+        "count": 5
+      },
+      {
+        "old": "\"No mods using NativeSettings installed!\"",
+        "new": "\"尚未安装使用此设置菜单的模组。\"",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "path": "r6/scripts/ResetAttributesAlwaysAvailable.reds",
+    "original_sha256": "4d5986f8fbe580fa1fca33e1e0ed72896cc6a0816fb749ce7048338b3e130cfc",
+    "localized_sha256": "1db8fb363cb7695eee9c2334ba8bcd835218e6541fc1cc610779d77a6e4f6caa",
+    "output_newline": "crlf",
+    "replacements": [
+      {
+        "old": "\"This action will reset all of your Attributes, allowing you to redistribute your spent points. You can do this as many times as you want. Do you wish to continue?\"",
+        "new": "\"此操作会重置所有属性，返还已投入的属性点，供你重新分配。属性可以无限次重置。是否继续？\"",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "path": "red4ext/plugins/mod_settings/packed.reds",
+    "original_sha256": "9576c53c0b0a599ff5d26b2f4c300f59904a8a7e2e648e528f8ba6ae8dce6ad3",
+    "localized_sha256": "269ba29b5b728fbd3cef0d260fe64517282f1d35d927ba3b1ce634bd4ccefea3",
+    "output_newline": "crlf",
+    "replacements": [
+      {
+        "old": "title = \"Restore Defaults\";",
+        "new": "title = \"恢复默认设置\";",
+        "count": 1
+      },
+      {
+        "old": "\"Restore the default settings for \" + modLabel + \"? Other mods are not affected.\"",
+        "new": "\"是否恢复“\" + modLabel + \"”的默认设置？其他模组不受影响。\"",
+        "count": 1
+      },
+      {
+        "old": "GenericMessageNotification.Show(this, \"Reset\", \"Discard the unsaved changes to your mod settings?\",",
+        "new": "GenericMessageNotification.Show(this, \"放弃更改\", \"是否放弃尚未保存的模组设置更改？\",",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "path": "red4ext/plugins/mod_settings/ModSettings.archive.xl",
+    "original_sha256": "8742606ff6cde630ca05d2bd03e763156a7814fbf5909a534f2d0f117e0b2b87",
+    "localized_sha256": "48223c91c83be01349b73fdd6e5ec2cf96e37fe432f6bd4b2cdf72a939bbca00",
+    "replacements": [
+      {
+        "old": "localization:\r\n  onscreens:\r\n    en-us: base\\localization\\en-us\\onscreens\\mod_settings.json",
+        "new": "localization:\r\n  onscreens:\r\n    en-us: codex_qol_zh\\onscreens.json\r\n    zh-cn: codex_qol_zh\\onscreens.json",
+        "count": 1
+      }
+    ]
+  }
+]

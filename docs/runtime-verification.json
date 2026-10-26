@@ -1,0 +1,29 @@
+{
+  "GameVersion": "2.5",
+  "CETVersion": "v1.38.1",
+  "CETSourceCommit": "213151fa22c79182922a08a44e4a44d44739d1cd",
+  "InstalledFileCount": 11,
+  "AllHashesMatch": true,
+  "LuaSyntaxCheckPassed": true,
+  "RedscriptOfflineCompilationPassed": true,
+  "GameStartupCompilationPassed": true,
+  "ArchiveResourceRoundTripPassed": true,
+  "FlashlightArchiveDetected": true,
+  "FlashlightSettingsCount": 10,
+  "RuntimeChineseLabels": {
+    "Hide during autodrive": "自动驾驶时隐藏",
+    "Always": "始终显示",
+    "UI-Labels-ModSettings": "模组设置",
+    "In-World Navigation": "全息导航",
+    "Scrapper": "自动拆解",
+    "Show arrows": "显示导航箭头",
+    "Toggle arrows key": "导航箭头开关键",
+    "When Driving": "驾驶时显示",
+    "When Walking": "步行时显示",
+    "Arrow opacity": "箭头不透明度"
+  },
+  "TemporaryVerificationCodeRemoved": true,
+  "GameplayActionPerformedByVerification": false,
+  "VerifiedAt": "2026-10-26T22:12:32.5980813+08:00",
+  "CETBinaryPublished": "The PE CodeView PDB pathname and six wide assertion source paths were reduced to filenames; executable code is unchanged."
+}

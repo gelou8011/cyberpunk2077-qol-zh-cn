@@ -1,0 +1,15 @@
+{
+  "original_text_files_verified": 7,
+  "payload_hashes_verified": 3,
+  "binary_change_limited_to_diagnostic_paths": true,
+  "diagnostic_path_strings_sanitized": 7,
+  "read_only_preflight_passed": true,
+  "fixture_install_files": 11,
+  "idempotent_reinstall_passed": true,
+  "rollback_refuses_later_edits": true,
+  "byte_exact_original_restore_passed": true,
+  "unknown_version_refused_before_write": true,
+  "official_cet_1_38_1_accepted": true,
+  "keep_existing_cet_option_passed": true,
+  "path_traversal_refused": true
+}

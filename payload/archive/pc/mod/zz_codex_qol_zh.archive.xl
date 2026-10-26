@@ -1,0 +1,4 @@
+localization:
+  onscreens:
+    en-us: codex_qol_zh\onscreens.json
+    zh-cn: codex_qol_zh\onscreens.json

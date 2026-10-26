@@ -1,0 +1,202 @@
+{
+  "Header": {
+    "WolvenKitVersion": "9.1.0",
+    "WKitJsonVersion": "0.0.9",
+    "GameVersion": 2310,
+    "ExportedDateTime": "2026-10-26T11:36:09.2848504Z",
+    "DataType": "CR2W",
+    "ArchiveFileName": "codex_qol_zh/onscreens.json"
+  },
+  "Data": {
+    "Version": 195,
+    "BuildVersion": 0,
+    "RootChunk": {
+      "$type": "JsonResource",
+      "cookingPlatform": "PLATFORM_PC",
+      "root": {
+        "HandleId": "0",
+        "Data": {
+          "$type": "localizationPersistenceOnScreenEntries",
+          "entries": [
+            {
+              "$type": "localizationPersistenceOnScreenEntry",
+              "femaleVariant": "模组设置",
+              "maleVariant": "模组设置",
+              "primaryKey": "0",
+              "secondaryKey": "UI-Labels-ModSettings"
+            },
+            {
+              "$type": "localizationPersistenceOnScreenEntry",
+              "femaleVariant": "全息导航",
+              "maleVariant": "全息导航",
+              "primaryKey": "0",
+              "secondaryKey": "In-World Navigation"
+            },
+            {
+              "$type": "localizationPersistenceOnScreenEntry",
+              "femaleVariant": "自动拆解",
+              "maleVariant": "自动拆解",
+              "primaryKey": "0",
+              "secondaryKey": "Scrapper"
+            },
+            {
+              "$type": "localizationPersistenceOnScreenEntry",
+              "femaleVariant": "显示导航箭头",
+              "maleVariant": "显示导航箭头",
+              "primaryKey": "0",
+              "secondaryKey": "Show arrows"
+            },
+            {
+              "$type": "localizationPersistenceOnScreenEntry",
+              "femaleVariant": "也可以使用下方设置的快捷键开关。",
+              "maleVariant": "也可以使用下方设置的快捷键开关。",
+              "primaryKey": "0",
+              "secondaryKey": "Can also be toggled with the key below"
+            },
+            {
+              "$type": "localizationPersistenceOnScreenEntry",
+              "femaleVariant": "导航箭头开关键",
+              "maleVariant": "导航箭头开关键",
+              "primaryKey": "0",
+              "secondaryKey": "Toggle arrows key"
+            },
+            {
+              "$type": "localizationPersistenceOnScreenEntry",
+              "femaleVariant": "需要安装 Input Loader 前置。",
+              "maleVariant": "需要安装 Input Loader 前置。",
+              "primaryKey": "0",
+              "secondaryKey": "Requires Input Loader"
+            },
+            {
+              "$type": "localizationPersistenceOnScreenEntry",
+              "femaleVariant": "跟随小地图显示状态",
+              "maleVariant": "跟随小地图显示状态",
+              "primaryKey": "0",
+              "secondaryKey": "Follow HUD visibility"
+            },
+            {
+              "$type": "localizationPersistenceOnScreenEntry",
+              "femaleVariant": "小地图隐藏时同时隐藏导航箭头，包括拍照模式或界面隐藏模组。",
+              "maleVariant": "小地图隐藏时同时隐藏导航箭头，包括拍照模式或界面隐藏模组。",
+              "primaryKey": "0",
+              "secondaryKey": "Hide the arrows while the minimap is hidden (photo mode, Limited HUD, HUD toggles)"
+            },
+            {
+              "$type": "localizationPersistenceOnScreenEntry",
+              "femaleVariant": "显示模式",
+              "maleVariant": "显示模式",
+              "primaryKey": "0",
+              "secondaryKey": "Display mode"
+            },
+            {
+              "$type": "localizationPersistenceOnScreenEntry",
+              "femaleVariant": "始终显示",
+              "maleVariant": "始终显示",
+              "primaryKey": "0",
+              "secondaryKey": "Always"
+            },
+            {
+              "$type": "localizationPersistenceOnScreenEntry",
+              "femaleVariant": "驾驶时显示",
+              "maleVariant": "驾驶时显示",
+              "primaryKey": "0",
+              "secondaryKey": "When Driving"
+            },
+            {
+              "$type": "localizationPersistenceOnScreenEntry",
+              "femaleVariant": "步行时显示",
+              "maleVariant": "步行时显示",
+              "primaryKey": "0",
+              "secondaryKey": "When Walking"
+            },
+            {
+              "$type": "localizationPersistenceOnScreenEntry",
+              "femaleVariant": "箭头间距",
+              "maleVariant": "箭头间距",
+              "primaryKey": "0",
+              "secondaryKey": "Arrow spacing"
+            },
+            {
+              "$type": "localizationPersistenceOnScreenEntry",
+              "femaleVariant": "相邻导航箭头之间的距离，使用游戏内的距离单位。",
+              "maleVariant": "相邻导航箭头之间的距离，使用游戏内的距离单位。",
+              "primaryKey": "0",
+              "secondaryKey": "In-game units between arrows"
+            },
+            {
+              "$type": "localizationPersistenceOnScreenEntry",
+              "femaleVariant": "最多显示箭头数量",
+              "maleVariant": "最多显示箭头数量",
+              "primaryKey": "0",
+              "secondaryKey": "Max number of arrows"
+            },
+            {
+              "$type": "localizationPersistenceOnScreenEntry",
+              "femaleVariant": "近距离淡出范围",
+              "maleVariant": "近距离淡出范围",
+              "primaryKey": "0",
+              "secondaryKey": "Distance within arrows will fade"
+            },
+            {
+              "$type": "localizationPersistenceOnScreenEntry",
+              "femaleVariant": "以玩家位置为基准，范围内的箭头逐渐淡出。",
+              "maleVariant": "以玩家位置为基准，范围内的箭头逐渐淡出。",
+              "primaryKey": "0",
+              "secondaryKey": "Measures from player"
+            },
+            {
+              "$type": "localizationPersistenceOnScreenEntry",
+              "femaleVariant": "箭头不透明度",
+              "maleVariant": "箭头不透明度",
+              "primaryKey": "0",
+              "secondaryKey": "Arrow opacity"
+            },
+            {
+              "$type": "localizationPersistenceOnScreenEntry",
+              "femaleVariant": "箭头高度偏移",
+              "maleVariant": "箭头高度偏移",
+              "primaryKey": "0",
+              "secondaryKey": "Vertical offset"
+            },
+            {
+              "$type": "localizationPersistenceOnScreenEntry",
+              "femaleVariant": "相对于路线抬高或降低箭头的距离，单位为米。",
+              "maleVariant": "相对于路线抬高或降低箭头的距离，单位为米。",
+              "primaryKey": "0",
+              "secondaryKey": "Meters to raise (or lower) the arrows from the path"
+            },
+            {
+              "$type": "localizationPersistenceOnScreenEntry",
+              "femaleVariant": "自动驾驶时隐藏",
+              "maleVariant": "自动驾驶时隐藏",
+              "primaryKey": "0",
+              "secondaryKey": "Hide during autodrive"
+            },
+            {
+              "$type": "localizationPersistenceOnScreenEntry",
+              "femaleVariant": "乘客状态时隐藏",
+              "maleVariant": "乘客状态时隐藏",
+              "primaryKey": "0",
+              "secondaryKey": "Hide as a passenger"
+            },
+            {
+              "$type": "localizationPersistenceOnScreenEntry",
+              "femaleVariant": "由他人驾驶时隐藏箭头，例如德拉曼出租车或任务搭车。",
+              "maleVariant": "由他人驾驶时隐藏箭头，例如德拉曼出租车或任务搭车。",
+              "primaryKey": "0",
+              "secondaryKey": "Hide while someone else is driving (Delamain, quest rides)"
+            },
+            {
+              "$type": "localizationPersistenceOnScreenEntry",
+              "femaleVariant": "乘坐地铁时隐藏",
+              "maleVariant": "乘坐地铁时隐藏",
+              "primaryKey": "0",
+              "secondaryKey": "Hide on the metro"
+            }
+          ]
+        }
+      }
+    },
+    "EmbeddedFiles": []
+  }
+}

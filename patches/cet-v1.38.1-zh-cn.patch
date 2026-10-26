@@ -1,0 +1,904 @@
+diff --git a/src/Utils.cpp b/src/Utils.cpp
+index 32646ca..5e49a95 100644
+--- a/src/Utils.cpp
++++ b/src/Utils.cpp
+@@ -189,7 +189,7 @@ float GetCenteredOffsetForText(const char* acpText)
+ TChangedCBResult UnsavedChangesPopup(
+     const std::string& acpOwnerName, bool& aFirstTime, const bool acMadeChanges, const TWidgetCB& acpSaveCB, const TWidgetCB& acpLoadCB, const TWidgetCB& acpCancelCB)
+ {
+-    auto popupTitle = acpOwnerName.empty() ? "Unsaved changes" : fmt::format("{} - Unsaved changes", acpOwnerName);
++    auto popupTitle = acpOwnerName.empty() ? "未保存的更改" : fmt::format("{} - 未保存的更改", acpOwnerName);
+ 
+     if (acMadeChanges)
+     {
+@@ -203,18 +203,18 @@ TChangedCBResult UnsavedChangesPopup(
+ 
+         if (ImGui::BeginPopupModal(popupTitle.c_str(), nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+         {
+-            const auto shorterTextSz{ImGui::CalcTextSize("You have some unsaved changes.").x};
+-            const auto longerTextSz{ImGui::CalcTextSize("Do you wish to apply them or discard them?").x};
++            const auto shorterTextSz{ImGui::CalcTextSize("当前有尚未保存的更改。").x};
++            const auto longerTextSz{ImGui::CalcTextSize("要应用这些更改，还是放弃更改？").x};
+             const auto diffTextSz{longerTextSz - shorterTextSz};
+ 
+             ImGui::SetCursorPosX(diffTextSz / 2);
+-            ImGui::TextUnformatted("You have some unsaved changes.");
+-            ImGui::TextUnformatted("Do you wish to apply them or discard them?");
++            ImGui::TextUnformatted("当前有尚未保存的更改。");
++            ImGui::TextUnformatted("要应用这些更改，还是放弃更改？");
+             ImGui::Separator();
+ 
+             const auto itemWidth = GetAlignedItemWidth(3);
+ 
+-            if (ImGui::Button("Apply", ImVec2(itemWidth, 0)))
++            if (ImGui::Button("应用", ImVec2(itemWidth, 0)))
+             {
+                 if (acpSaveCB)
+                     acpSaveCB();
+@@ -223,7 +223,7 @@ TChangedCBResult UnsavedChangesPopup(
+                 ImGui::CloseCurrentPopup();
+             }
+             ImGui::SameLine();
+-            if (ImGui::Button("Discard", ImVec2(itemWidth, 0)))
++            if (ImGui::Button("放弃更改", ImVec2(itemWidth, 0)))
+             {
+                 if (acpLoadCB)
+                     acpLoadCB();
+@@ -232,7 +232,7 @@ TChangedCBResult UnsavedChangesPopup(
+                 ImGui::CloseCurrentPopup();
+             }
+             ImGui::SameLine();
+-            if (ImGui::Button("Cancel", ImVec2(itemWidth, 0)))
++            if (ImGui::Button("取消", ImVec2(itemWidth, 0)))
+             {
+                 if (acpCancelCB)
+                     acpCancelCB();
+diff --git a/src/common/ImGuiNotify.h b/src/common/ImGuiNotify.h
+index e0d72fc..52f7f4a 100644
+--- a/src/common/ImGuiNotify.h
++++ b/src/common/ImGuiNotify.h
+@@ -187,10 +187,10 @@ public:
+             switch (this->type)
+             {
+             case ToastType::None: return nullptr;
+-            case ToastType::Success: return "Success";
+-            case ToastType::Warning: return "Warning";
+-            case ToastType::Error: return "Error";
+-            case ToastType::Info: return "Info";
++            case ToastType::Success: return "成功";
++            case ToastType::Warning: return "警告";
++            case ToastType::Error: return "错误";
++            case ToastType::Info: return "信息";
+             default: return nullptr;
+             }
+         }
+diff --git a/src/overlay/Overlay.cpp b/src/overlay/Overlay.cpp
+index b62a3ec..37805b3 100644
+--- a/src/overlay/Overlay.cpp
++++ b/src/overlay/Overlay.cpp
+@@ -22,7 +22,7 @@ void Overlay::PostInitialize()
+         else
+         {
+             const auto cOverlayBindCode = CET::Get().GetBindings().GetBindCodeForModBind(Bindings::GetOverlayToggleModBind());
+-            ImGui::InsertNotification({ToastType::Info, NOTIFY_DEFAULT_DISMISS, "CET Overlay Bind: %s", VKBindings::GetBindString(cOverlayBindCode).c_str()});
++            ImGui::InsertNotification({ToastType::Info, NOTIFY_DEFAULT_DISMISS, "CET 面板快捷键：%s", VKBindings::GetBindString(cOverlayBindCode).c_str()});
+         }
+ 
+         m_initialized = true;
+@@ -266,7 +266,7 @@ void Overlay::DrawToolbar()
+     auto& persistentState = m_persistentState.Overlay;
+ 
+     ImGui::PushStyleColor(ImGuiCol_Button, persistentState.ConsoleToggled ? ImGui::GetStyleColorVec4(ImGuiCol_ButtonActive) : ImGui::GetStyleColorVec4(ImGuiCol_Button));
+-    if (ImGui::Button("Console", ImVec2(itemWidth, 0)))
++    if (ImGui::Button("控制台", ImVec2(itemWidth, 0)))
+         m_console.Toggle();
+     if (!m_toggled)
+         persistentState.ConsoleToggled = m_console.IsEnabled();
+@@ -275,7 +275,7 @@ void Overlay::DrawToolbar()
+     ImGui::SameLine();
+ 
+     ImGui::PushStyleColor(ImGuiCol_Button, persistentState.BindingsToggled ? ImGui::GetStyleColorVec4(ImGuiCol_ButtonActive) : ImGui::GetStyleColorVec4(ImGuiCol_Button));
+-    if (ImGui::Button("Bindings", ImVec2(itemWidth, 0)))
++    if (ImGui::Button("按键绑定", ImVec2(itemWidth, 0)))
+         m_bindings.Toggle();
+     if (!m_toggled)
+         persistentState.BindingsToggled = m_bindings.IsEnabled();
+@@ -284,7 +284,7 @@ void Overlay::DrawToolbar()
+     ImGui::SameLine();
+ 
+     ImGui::PushStyleColor(ImGuiCol_Button, persistentState.SettingsToggled ? ImGui::GetStyleColorVec4(ImGuiCol_ButtonActive) : ImGui::GetStyleColorVec4(ImGuiCol_Button));
+-    if (ImGui::Button("Settings", ImVec2(itemWidth, 0)))
++    if (ImGui::Button("设置", ImVec2(itemWidth, 0)))
+         m_settings.Toggle();
+     if (!m_toggled)
+         persistentState.SettingsToggled = m_settings.IsEnabled();
+@@ -293,7 +293,7 @@ void Overlay::DrawToolbar()
+     ImGui::SameLine();
+ 
+     ImGui::PushStyleColor(ImGuiCol_Button, persistentState.TweakDBEditorToggled ? ImGui::GetStyleColorVec4(ImGuiCol_ButtonActive) : ImGui::GetStyleColorVec4(ImGuiCol_Button));
+-    if (ImGui::Button("TweakDB Editor", ImVec2(itemWidth, 0)))
++    if (ImGui::Button("TweakDB 编辑器", ImVec2(itemWidth, 0)))
+         m_tweakDBEditor.Toggle();
+     if (!m_toggled)
+         persistentState.TweakDBEditorToggled = m_tweakDBEditor.IsEnabled();
+@@ -302,7 +302,7 @@ void Overlay::DrawToolbar()
+     ImGui::SameLine();
+ 
+     ImGui::PushStyleColor(ImGuiCol_Button, persistentState.GameLogToggled ? ImGui::GetStyleColorVec4(ImGuiCol_ButtonActive) : ImGui::GetStyleColorVec4(ImGuiCol_Button));
+-    if (ImGui::Button("Game Log", ImVec2(itemWidth, 0)))
++    if (ImGui::Button("游戏日志", ImVec2(itemWidth, 0)))
+         m_gameLog.Toggle();
+     if (!m_toggled)
+         persistentState.GameLogToggled = m_gameLog.IsEnabled();
+@@ -311,7 +311,7 @@ void Overlay::DrawToolbar()
+     ImGui::SameLine();
+ 
+     ImGui::PushStyleColor(ImGuiCol_Button, persistentState.ImGuiDebugToggled ? ImGui::GetStyleColorVec4(ImGuiCol_ButtonActive) : ImGui::GetStyleColorVec4(ImGuiCol_Button));
+-    if (ImGui::Button("ImGui Debug", ImVec2(itemWidth, 0)))
++    if (ImGui::Button("ImGui 调试", ImVec2(itemWidth, 0)))
+         m_imguiDebug.Toggle();
+     if (!m_toggled)
+         persistentState.ImGuiDebugToggled = m_imguiDebug.IsEnabled();
+@@ -319,6 +319,6 @@ void Overlay::DrawToolbar()
+ 
+     ImGui::SameLine();
+ 
+-    if (ImGui::Button("Reload all mods", ImVec2(itemWidth, 0)))
++    if (ImGui::Button("重新加载全部模组", ImVec2(itemWidth, 0)))
+         m_vm.ReloadAllMods();
+ }
+diff --git a/src/overlay/widgets/Bindings.cpp b/src/overlay/widgets/Bindings.cpp
+index b2c14fe..0112741 100644
+--- a/src/overlay/widgets/Bindings.cpp
++++ b/src/overlay/widgets/Bindings.cpp
+@@ -8,7 +8,7 @@
+ namespace
+ {
+ VKBind s_overlayToggleBind{
+-    "overlay_key", "Overlay Key", "Use this hotkey to toggle overlay on and off.",
++    "overlay_key", "面板开关键", "使用此快捷键显示或隐藏 CET 面板。",
+     []
+     {
+         if (!CET::Get().GetBindings().IsRecordingBind())
+@@ -24,7 +24,7 @@ bool VKBindInfo::operator==(const std::string& id) const
+ }
+ 
+ Bindings::Bindings(VKBindings& aBindings, LuaVM& aVm)
+-    : Widget("Bindings")
++    : Widget("按键绑定")
+     , m_bindings(aBindings)
+     , m_vm(aVm)
+ {
+@@ -44,7 +44,7 @@ WidgetResult Bindings::OnEnable()
+ WidgetResult Bindings::OnPopup()
+ {
+     const auto ret = UnsavedChangesPopup(
+-        "Bindings", m_openChangesModal, m_madeChanges, [this] { Save(); }, [this] { ResetChanges(); });
++        "按键绑定", m_openChangesModal, m_madeChanges, [this] { Save(); }, [this] { ResetChanges(); });
+     m_madeChanges = ret == TChangedCBResult::CHANGED;
+     m_popupResult = ret;
+ 
+@@ -79,7 +79,7 @@ WidgetResult Bindings::OnDisable()
+ void Bindings::OnUpdate()
+ {
+     const auto frameSize = ImVec2(ImGui::GetContentRegionAvail().x, -(ImGui::GetFrameHeight() + ImGui::GetStyle().ItemSpacing.y + ImGui::GetStyle().FramePadding.y + 2.0f));
+-    if (ImGui::BeginChild(ImGui::GetID("Bindings"), frameSize))
++    if (ImGui::BeginChild(ImGui::GetID("按键绑定"), frameSize))
+     {
+         m_madeChanges = false;
+         for (auto modBindingsIt = m_vkBindInfos.begin(); modBindingsIt != m_vkBindInfos.end(); ++modBindingsIt)
+@@ -90,10 +90,10 @@ void Bindings::OnUpdate()
+     ImGui::Separator();
+ 
+     const auto itemWidth = GetAlignedItemWidth(2);
+-    if (ImGui::Button("Save", ImVec2(itemWidth, 0)))
++    if (ImGui::Button("保存", ImVec2(itemWidth, 0)))
+         Save();
+     ImGui::SameLine();
+-    if (ImGui::Button("Reset changes", ImVec2(itemWidth, 0)))
++    if (ImGui::Button("放弃更改", ImVec2(itemWidth, 0)))
+         ResetChanges();
+ }
+ 
+@@ -165,17 +165,17 @@ bool Bindings::FirstTimeSetup()
+ 
+     m_vm.BlockDraw(true);
+ 
+-    ImGui::OpenPopup("CET First Time Setup");
++    ImGui::OpenPopup("CET 首次设置");
+ 
+-    if (ImGui::BeginPopupModal("CET First Time Setup", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
++    if (ImGui::BeginPopupModal("CET 首次设置", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+     {
+-        const auto shorterTextSz{ImGui::CalcTextSize("Combo can be composed from up to 4 keys.").x};
+-        const auto longerTextSz{ImGui::CalcTextSize("Please, bind some key combination for toggling overlay!").x};
++        const auto shorterTextSz{ImGui::CalcTextSize("组合快捷键最多可包含 4 个按键。").x};
++        const auto longerTextSz{ImGui::CalcTextSize("请设置用于显示或隐藏面板的快捷键。").x};
+         const auto diffTextSz{longerTextSz - shorterTextSz};
+ 
+-        ImGui::TextUnformatted("Please, bind some key combination for toggling overlay!");
++        ImGui::TextUnformatted("请设置用于显示或隐藏面板的快捷键。");
+         ImGui::SetCursorPosX(diffTextSz / 2);
+-        ImGui::TextUnformatted("Combo can be composed from up to 4 keys.");
++        ImGui::TextUnformatted("组合快捷键最多可包含 4 个按键。");
+         ImGui::Separator();
+ 
+         auto& [cetBinds, cetHotkeys] = m_vkBindInfos.at(s_overlayToggleModBind.ModName);
+@@ -359,7 +359,7 @@ void Bindings::UpdateAndDrawBinding(const VKModBind& acModBind, VKBindInfo& aVKB
+                 ImGui::EndTooltip();
+             }
+             else
+-                ImGui::SetTooltip("Currently unable to draw this tooltip. Wait for a bit please...");
++                ImGui::SetTooltip("暂时无法显示此提示，请稍候……");
+         }
+         if (bind.HasSimpleDescription())
+         {
+@@ -374,7 +374,7 @@ void Bindings::UpdateAndDrawBinding(const VKModBind& acModBind, VKBindInfo& aVKB
+     const auto currentBindState = aVKBindInfo.IsBinding ? m_bindings.GetLastRecordingResult() : aVKBindInfo.CodeBind;
+     ImGui::PushID(&aVKBindInfo.CodeBind);
+     if (ImGui::Button(
+-            aVKBindInfo.IsBinding && currentBindState == 0 ? "Binding..." : VKBindings::GetBindString(currentBindState).c_str(),
++            aVKBindInfo.IsBinding && currentBindState == 0 ? "请按下要绑定的按键……" : VKBindings::GetBindString(currentBindState).c_str(),
+             ImVec2(unbindable ? -(ImGui::GetFrameHeight() + ImGui::GetStyle().ItemSpacing.x) : -FLT_MIN, 0)))
+     {
+         if (!aVKBindInfo.IsBinding && !isRecording)
+@@ -396,7 +396,7 @@ void Bindings::UpdateAndDrawBinding(const VKModBind& acModBind, VKBindInfo& aVKB
+                 ImGui::EndTooltip();
+             }
+             else
+-                ImGui::SetTooltip("Currently unable to draw this tooltip. Wait for a bit please...");
++                ImGui::SetTooltip("暂时无法显示此提示，请稍候……");
+         }
+         if (bind.HasSimpleDescription())
+         {
+@@ -425,7 +425,7 @@ void Bindings::UpdateAndDrawBinding(const VKModBind& acModBind, VKBindInfo& aVKB
+         ImGui::PopID();
+ 
+         if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled))
+-            ImGui::SetTooltip("Uncheck this checkbox to unbind this binding.");
++            ImGui::SetTooltip("取消勾选可清除此项按键绑定。");
+     }
+ 
+     ImGui::PopStyleColor();
+@@ -458,6 +458,9 @@ void Bindings::UpdateAndDrawModBindings(const std::string& acModName, TiltedPhoq
+             return c;
+         });
+ 
++    if (acModName == "flashlight")
++        activeModName = "手电筒";
++
+     auto headerOpen = aSimplified;
+     if (!headerOpen)
+         headerOpen = ImGui::CollapsingHeader(activeModName.c_str(), ImGuiTreeNodeFlags_DefaultOpen);
+@@ -471,11 +474,11 @@ void Bindings::UpdateAndDrawModBindings(const std::string& acModName, TiltedPhoq
+     {
+         if (!aSimplified)
+         {
+-            ImGui::SetCursorPosX(ImGui::GetCursorPosX() + GetCenteredOffsetForText("Hotkeys"));
+-            ImGui::TextUnformatted("Hotkeys");
++            ImGui::SetCursorPosX(ImGui::GetCursorPosX() + GetCenteredOffsetForText("组合快捷键"));
++            ImGui::TextUnformatted("组合快捷键");
+             if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled))
+-                ImGui::SetTooltip("Hotkeys react after assigned key combination has been pressed and subsequently "
+-                                  "released. You can bind up to 4 key combination to them.");
++                ImGui::SetTooltip("组合快捷键在按下并松开后触发。"
++                                  "最多可设置 4 个按键的组合。");
+             ImGui::Separator();
+         }
+ 
+@@ -495,10 +498,10 @@ void Bindings::UpdateAndDrawModBindings(const std::string& acModName, TiltedPhoq
+     {
+         if (!aSimplified)
+         {
+-            ImGui::SetCursorPosX(ImGui::GetCursorPosX() + GetCenteredOffsetForText("Inputs"));
+-            ImGui::TextUnformatted("Inputs");
++            ImGui::SetCursorPosX(ImGui::GetCursorPosX() + GetCenteredOffsetForText("单键输入"));
++            ImGui::TextUnformatted("单键输入");
+             if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled))
+-                ImGui::SetTooltip("Inputs react when key is pressed and released. You can bind single key to them.");
++                ImGui::SetTooltip("按下和松开时都会触发输入事件。每项只能绑定一个按键。");
+             ImGui::Separator();
+         }
+ 
+diff --git a/src/overlay/widgets/Console.cpp b/src/overlay/widgets/Console.cpp
+index ca61fe5..7ee56f1 100644
+--- a/src/overlay/widgets/Console.cpp
++++ b/src/overlay/widgets/Console.cpp
+@@ -6,7 +6,7 @@
+ #include <Utils.h>
+ 
+ Console::Console(Options& aOptions, PersistentState& aPersistentState, LuaVM& aVm)
+-    : Widget("Console")
++    : Widget("控制台")
+     , m_options(aOptions)
+     , m_persistentState(aPersistentState)
+     , m_vm(aVm)
+@@ -106,7 +106,7 @@ void Console::OnUpdate()
+         if (!m_command.empty())
+         {
+             if (!m_vm.ExecuteLua(m_command))
+-                consoleLogger->info("Command failed to execute!");
++                consoleLogger->info("命令执行失败！");
+ 
+             m_command.shrink_to_fit();
+ 
+diff --git a/src/overlay/widgets/GameLog.cpp b/src/overlay/widgets/GameLog.cpp
+index 98e1a2a..671d1c1 100644
+--- a/src/overlay/widgets/GameLog.cpp
++++ b/src/overlay/widgets/GameLog.cpp
+@@ -3,7 +3,7 @@
+ #include "GameLog.h"
+ 
+ GameLog::GameLog()
+-    : Widget("Game Log")
++    : Widget("游戏日志")
+     , m_logWindow("gamelog")
+ {
+ }
+diff --git a/src/overlay/widgets/ImGuiDebug.cpp b/src/overlay/widgets/ImGuiDebug.cpp
+index a1ad565..ec02640 100644
+--- a/src/overlay/widgets/ImGuiDebug.cpp
++++ b/src/overlay/widgets/ImGuiDebug.cpp
+@@ -3,7 +3,7 @@
+ #include "ImGuiDebug.h"
+ 
+ ImGuiDebug::ImGuiDebug()
+-    : Widget("ImGui Debug", true)
++    : Widget("ImGui 调试", true)
+ {
+ }
+ 
+@@ -24,7 +24,7 @@ void ImGuiDebug::OnUpdate()
+ 
+     // add style editor block (not a window). you can pass in a reference ImGuiStyle structure to compare to, revert to
+     // and save to (else it uses the default style)
+-    ImGui::Begin("Dear ImGui Style Editor");
++    ImGui::Begin("ImGui 样式编辑器");
+     ImGui::ShowStyleEditor(nullptr);
+     ImGui::End();
+ 
+diff --git a/src/overlay/widgets/LogWindow.cpp b/src/overlay/widgets/LogWindow.cpp
+index 403aa0c..2cf2059 100644
+--- a/src/overlay/widgets/LogWindow.cpp
++++ b/src/overlay/widgets/LogWindow.cpp
+@@ -16,7 +16,7 @@ void LogWindow::Draw(const ImVec2& size)
+ {
+     const auto itemWidth = GetAlignedItemWidth(2);
+ 
+-    if (ImGui::Button("Clear output", ImVec2(itemWidth, 0)))
++    if (ImGui::Button("清空输出", ImVec2(itemWidth, 0)))
+     {
+         m_normalizedWidth = -1.0f;
+         std::lock_guard _{m_lock};
+@@ -24,7 +24,7 @@ void LogWindow::Draw(const ImVec2& size)
+         m_lines.clear();
+     }
+     ImGui::SameLine();
+-    ImGui::Checkbox("Auto-scroll", &m_shouldScroll);
++    ImGui::Checkbox("自动滚动", &m_shouldScroll);
+ 
+     const auto& style = ImGui::GetStyle();
+ 
+diff --git a/src/overlay/widgets/Settings.cpp b/src/overlay/widgets/Settings.cpp
+index 24e01dd..7d34bcc 100644
+--- a/src/overlay/widgets/Settings.cpp
++++ b/src/overlay/widgets/Settings.cpp
+@@ -7,7 +7,7 @@
+ #include <Utils.h>
+ 
+ Settings::Settings(Options& aOptions, LuaVM& aVm)
+-    : Widget("Settings")
++    : Widget("设置")
+     , m_options(aOptions)
+     , m_vm(aVm)
+ {
+@@ -16,7 +16,7 @@ Settings::Settings(Options& aOptions, LuaVM& aVm)
+ 
+ WidgetResult Settings::OnPopup()
+ {
+-    const auto ret = UnsavedChangesPopup("Settings", m_openChangesModal, m_madeChanges, [this] { Save(); }, [this] { Load(); });
++    const auto ret = UnsavedChangesPopup("设置", m_openChangesModal, m_madeChanges, [this] { Save(); }, [this] { Load(); });
+     m_madeChanges = ret == TChangedCBResult::CHANGED;
+     m_popupResult = ret;
+ 
+@@ -48,59 +48,59 @@ WidgetResult Settings::OnDisable()
+ void Settings::OnUpdate()
+ {
+     const auto frameSize = ImVec2(ImGui::GetContentRegionAvail().x, -(ImGui::GetFrameHeight() + ImGui::GetStyle().ItemSpacing.y + ImGui::GetStyle().FramePadding.y + 2.0f));
+-    if (ImGui::BeginChild(ImGui::GetID("Settings"), frameSize))
++    if (ImGui::BeginChild(ImGui::GetID("设置"), frameSize))
+     {
+         m_madeChanges = false;
+-        if (ImGui::CollapsingHeader("Patches", ImGuiTreeNodeFlags_DefaultOpen))
++        if (ImGui::CollapsingHeader("游戏调整", ImGuiTreeNodeFlags_DefaultOpen))
+         {
+             ImGui::TreePush("##PATCHES");
+             if (ImGui::BeginTable("##SETTINGS_PATCHES", 2, ImGuiTableFlags_Sortable | ImGuiTableFlags_SizingStretchSame, ImVec2(-ImGui::GetStyle().IndentSpacing, 0)))
+             {
+                 const auto& patchesSettings = m_options.Patches;
+                 UpdateAndDrawSetting(
+-                    "Disable Async Compute",
+-                    "Disables async compute, this can give a boost on older GPUs like Nvidia 10xx series for example "
+-                    "(requires restart to take effect).",
++                    "禁用异步计算",
++                    "禁用异步计算，可能提升较旧显卡（例如 NVIDIA 10 系列）的性能。"
++                    "（重启游戏后生效。）",
+                     m_patches.AsyncCompute, patchesSettings.AsyncCompute);
+                 UpdateAndDrawSetting(
+-                    "Disable Anti-aliasing", "Completely disables anti-aliasing (requires restart to take effect).", m_patches.Antialiasing, patchesSettings.Antialiasing);
++                    "禁用抗锯齿", "完全禁用抗锯齿。重启游戏后生效。", m_patches.Antialiasing, patchesSettings.Antialiasing);
+                 UpdateAndDrawSetting(
+-                    "Disable Vignette", "Disables vignetting along screen borders (requires restart to take effect).", m_patches.DisableVignette, patchesSettings.DisableVignette);
++                    "禁用暗角", "移除画面边缘的暗角效果。重启游戏后生效。", m_patches.DisableVignette, patchesSettings.DisableVignette);
+                 UpdateAndDrawSetting(
+-                    "Disable Boundary Teleport", "Allows players to access out-of-bounds locations (requires restart to take effect).", m_patches.DisableBoundaryTeleport,
++                    "禁用越界传送", "允许玩家前往地图边界以外的位置。重启游戏后生效。", m_patches.DisableBoundaryTeleport,
+                     patchesSettings.DisableBoundaryTeleport);
+                 UpdateAndDrawSetting(
+-                    "Disable V-Sync (Windows 7 only)", "Disables VSync on Windows 7 to bypass the 60 FPS limit (requires restart to take effect).", m_patches.DisableWin7Vsync,
++                    "禁用垂直同步（仅 Windows 7）", "在 Windows 7 上禁用垂直同步以解除 60 帧限制。重启游戏后生效。", m_patches.DisableWin7Vsync,
+                     patchesSettings.DisableWin7Vsync);
+                 
+                 ImGui::EndTable();
+             }
+             ImGui::TreePop();
+         }
+-        if (ImGui::CollapsingHeader("CET Development Settings", ImGuiTreeNodeFlags_DefaultOpen))
++        if (ImGui::CollapsingHeader("CET 开发设置", ImGuiTreeNodeFlags_DefaultOpen))
+         {
+             ImGui::TreePush("##DEV");
+             if (ImGui::BeginTable("##SETTINGS_DEV", 2, ImGuiTableFlags_Sortable | ImGuiTableFlags_SizingStretchSame, ImVec2(-ImGui::GetStyle().IndentSpacing, 0)))
+             {
+                 const auto& developerSettings = m_options.Developer;
+                 UpdateAndDrawSetting(
+-                    "Remove Dead Bindings",
+-                    "Removes all bindings which are no longer valid (disabling this could be useful when debugging mod "
+-                    "issues).",
++                    "清理失效按键绑定",
++                    "移除已失效的按键绑定。排查模组问题时可以关闭此项"
++                    "。",
+                     m_developer.RemoveDeadBindings, developerSettings.RemoveDeadBindings);
+                 UpdateAndDrawSetting(
+-                    "Enable ImGui Assertions",
+-                    "Enables all ImGui assertions, assertions will get logged into log file of whoever triggered the "
+-                    "assertion (useful when debugging ImGui issues, should also be used to check mods before "
+-                    "shipping!).",
++                    "启用 ImGui 断言",
++                    "启用全部 ImGui 断言，并记录到触发问题的模组日志中。"
++                    "可用于排查界面问题，也建议在发布模组前"
++                    "启用检查。",
+                     m_developer.EnableImGuiAssertions, developerSettings.EnableImGuiAssertions);
+                 UpdateAndDrawSetting(
+-                    "Dump Game Options", "Dumps all game options into main log file (requires restart to take effect).", m_developer.DumpGameOptions,
++                    "导出游戏选项", "将所有游戏选项写入主日志文件。重启游戏后生效。", m_developer.DumpGameOptions,
+                     developerSettings.DumpGameOptions);
+                 UpdateAndDrawSetting(
+-                    "Enable JIT for Lua",
+-                    "Enables JIT compiler for Lua VM, which may majorly speed up the mods. Disable it in case you experience issues as a troubleshooting step (requires restart to "
+-                    "take effect).",
++                    "启用 Lua 即时编译",
++                    "为 Lua 虚拟机启用即时编译，可能显著提升模组运行速度。出现问题时可尝试关闭此项。重启游戏后"
++                    "生效。",
+                     m_developer.EnableJIT, developerSettings.EnableJIT);
+ 
+                 ImGui::EndTable();
+@@ -113,13 +113,13 @@ void Settings::OnUpdate()
+     ImGui::Separator();
+ 
+     const auto itemWidth = GetAlignedItemWidth(3);
+-    if (ImGui::Button("Load", ImVec2(itemWidth, 0)))
++    if (ImGui::Button("重新读取", ImVec2(itemWidth, 0)))
+         Load();
+     ImGui::SameLine();
+-    if (ImGui::Button("Save", ImVec2(itemWidth, 0)))
++    if (ImGui::Button("保存", ImVec2(itemWidth, 0)))
+         Save();
+     ImGui::SameLine();
+-    if (ImGui::Button("Defaults", ImVec2(itemWidth, 0)))
++    if (ImGui::Button("恢复默认", ImVec2(itemWidth, 0)))
+         ResetToDefaults();
+ }
+ 
+diff --git a/src/overlay/widgets/TweakDBEditor.cpp b/src/overlay/widgets/TweakDBEditor.cpp
+index 8a0b583..a5efbc8 100644
+--- a/src/overlay/widgets/TweakDBEditor.cpp
++++ b/src/overlay/widgets/TweakDBEditor.cpp
+@@ -123,7 +123,7 @@ bool StringContains(const std::string_view& acString, const std::string_view& ac
+ }
+ 
+ TweakDBEditor::TweakDBEditor(LuaVM& aVm)
+-    : Widget("TweakDB Editor")
++    : Widget("TweakDB 编辑器")
+     , m_vm(aVm)
+ {
+ }
+@@ -133,7 +133,7 @@ void TweakDBEditor::OnUpdate()
+     // LuaVM is initialized after TweakDB, let's wait for it
+     if (!m_vm.IsInitialized())
+     {
+-        ImGui::TextUnformatted("TweakDB is not initialized yet");
++        ImGui::TextUnformatted("TweakDB 尚未初始化");
+         return;
+     }
+ 
+@@ -141,39 +141,39 @@ void TweakDBEditor::OnUpdate()
+     {
+         RebuildCache();
+ 
+-        ImGui::TextUnformatted("Rebuilding cache...");
++        ImGui::TextUnformatted("正在重建缓存……");
+         return;
+     }
+ 
+     if (ImGui::BeginTabBar("TweakDBEditor-Bar"))
+     {
+-        if (ImGui::BeginTabItem("Records"))
++        if (ImGui::BeginTabItem("记录"))
+         {
+-            ImGui::BeginChild("Records");
++            ImGui::BeginChild("记录");
+             DrawRecordsTab();
+             ImGui::EndChild();
+             ImGui::EndTabItem();
+         }
+ 
+-        if (ImGui::BeginTabItem("Queries"))
++        if (ImGui::BeginTabItem("查询"))
+         {
+-            ImGui::BeginChild("Queries");
++            ImGui::BeginChild("查询");
+             DrawQueriesTab();
+             ImGui::EndChild();
+             ImGui::EndTabItem();
+         }
+ 
+-        if (ImGui::BeginTabItem("Flats"))
++        if (ImGui::BeginTabItem("字段值"))
+         {
+-            ImGui::BeginChild("Flats");
++            ImGui::BeginChild("字段值");
+             DrawFlatsTab();
+             ImGui::EndChild();
+             ImGui::EndTabItem();
+         }
+ 
+-        if (ImGui::BeginTabItem("Advanced"))
++        if (ImGui::BeginTabItem("高级"))
+         {
+-            ImGui::BeginChild("Advanced");
++            ImGui::BeginChild("高级");
+             DrawAdvancedTab();
+             ImGui::EndChild();
+             ImGui::EndTabItem();
+@@ -251,8 +251,8 @@ void TweakDBEditor::RefreshRecords()
+ void TweakDBEditor::RefreshFlats()
+ {
+     auto* pTDB = RED4ext::TweakDB::Get();
+-    constexpr uint64_t unknownGroupHash = RED4ext::FNV1a64("!Unknown!");
+-    constexpr uint64_t badGroupHash = RED4ext::FNV1a64("!BadName!");
++    constexpr uint64_t unknownGroupHash = RED4ext::FNV1a64("（未知）");
++    constexpr uint64_t badGroupHash = RED4ext::FNV1a64("（名称无效）");
+ 
+     std::shared_lock _1(pTDB->mutex00);
+     std::shared_lock _2(pTDB->mutex01);
+@@ -288,12 +288,12 @@ void TweakDBEditor::RefreshFlats()
+             std::string flatName;
+             const bool unknownFlatName = !GetTweakDBIDStringFlat(dbid, flatName);
+             if (unknownFlatName)
+-                cacheFlat(unknownGroupHash, "!Unknown!", std::move(flatName), dbid);
++                cacheFlat(unknownGroupHash, "（未知）", std::move(flatName), dbid);
+             else
+             {
+                 size_t idx = flatName.find('.');
+                 if (idx == std::string::npos)
+-                    cacheFlat(badGroupHash, "!BadName!", std::move(flatName), dbid);
++                    cacheFlat(badGroupHash, "（名称无效）", std::move(flatName), dbid);
+                 else
+                 {
+                     // < 1 || > size = group as much as possible
+@@ -318,13 +318,13 @@ void TweakDBEditor::RefreshFlats()
+     if (const auto it = cachedFlatGroupsMap.find(unknownGroupHash); it != cachedFlatGroupsMap.cend())
+     {
+         auto& group = m_cachedFlatGroups[it.value()];
+-        group.m_name = fmt::format("{} - {} flats!", group.m_name, group.m_flats.size());
++        group.m_name = fmt::format("{} - {} 项字段", group.m_name, group.m_flats.size());
+     }
+ 
+     if (const auto it = cachedFlatGroupsMap.find(badGroupHash); it != cachedFlatGroupsMap.cend())
+     {
+         auto& group = m_cachedFlatGroups[it.value()];
+-        group.m_name = fmt::format("{} - {} flats!", group.m_name, group.m_flats.size());
++        group.m_name = fmt::format("{} - {} 项字段", group.m_name, group.m_flats.size());
+     }
+ 
+     std::ranges::sort(m_cachedFlatGroups, [](const CachedFlatGroup& acLeft, const CachedFlatGroup& acRight) { return SortString(acLeft.m_name, acRight.m_name); });
+@@ -464,14 +464,14 @@ bool TweakDBEditor::DrawRecordDropdown(const char* acpLabel, RED4ext::TweakDBID&
+         }
+         else
+         {
+-            ImGui::SetTooltipUnformatted("ERROR_RECORD_NOT_FOUND");
++            ImGui::SetTooltipUnformatted("错误：找不到记录");
+         }
+     }
+     if (comboOpened)
+     {
+         static float searchTimer = 0.0f;
+         ImGui::SetNextItemWidth(-FLT_MIN);
+-        if (ImGui::InputTextWithHint("##dropdownSearch", "Search", s_tweakdbidFilterBuffer, sizeof(s_tweakdbidFilterBuffer)))
++        if (ImGui::InputTextWithHint("##dropdownSearch", "搜索", s_tweakdbidFilterBuffer, sizeof(s_tweakdbidFilterBuffer)))
+         {
+             searchTimer = c_searchDelay;
+         }
+@@ -573,7 +573,7 @@ bool TweakDBEditor::DrawFlat(RED4ext::TweakDBID aDBID)
+ 
+     if (!data.value)
+     {
+-        ImGui::Text("'%s' is not found in TweakDB", GetTweakDBIDStringFlat(aDBID.value & 0xFFFFFFFFFF).c_str());
++        ImGui::Text("在 TweakDB 中找不到“%s”", GetTweakDBIDStringFlat(aDBID.value & 0xFFFFFFFFFF).c_str());
+         return false;
+     }
+ 
+@@ -633,7 +633,7 @@ bool TweakDBEditor::DrawFlat(RED4ext::TweakDBID aDBID, RED4ext::CStackType& aSta
+         return DrawFlatInt32(aDBID, aStackType, aReadOnly);
+ 
+     const auto typeName = aStackType.type->GetName();
+-    ImGui::Text("unsupported type: %s", typeName.ToString());
++    ImGui::Text("不支持的类型：%s", typeName.ToString());
+     return false;
+ }
+ 
+@@ -666,9 +666,9 @@ bool TweakDBEditor::DrawFlatArray(RED4ext::TweakDBID aDBID, RED4ext::CStackType&
+     }
+ 
+     uint32_t arraySize = pArrayType->GetLength(arrayInstance);
+-    if (!aCollapsable || ImGui::TreeNode("", "[%s] %u items", arrayTypeName.ToString(), arraySize))
++    if (!aCollapsable || ImGui::TreeNode("", "[%s] 共 %u 项", arrayTypeName.ToString(), arraySize))
+     {
+-        if (!aReadOnly && ImGui::Button("clear"))
++        if (!aReadOnly && ImGui::Button("清空"))
+         {
+             pArrayType->Resize(arrayInstance, 0);
+             arraySize = 0;
+@@ -679,7 +679,7 @@ bool TweakDBEditor::DrawFlatArray(RED4ext::TweakDBID aDBID, RED4ext::CStackType&
+             uint64_t arrayKey = aDBID.value & 0xFFFFFFFFFF;
+             if (!isCached)
+             {
+-                if (ImGui::Button("edit"))
++                if (ImGui::Button("编辑"))
+                 {
+                     auto* allocator = pArrayType->GetAllocator();
+                     auto result = allocator->AllocAligned(pArrayType->GetSize(), pArrayType->GetAlignment());
+@@ -691,7 +691,7 @@ bool TweakDBEditor::DrawFlatArray(RED4ext::TweakDBID aDBID, RED4ext::CStackType&
+             else
+             {
+                 ImGui::SameLine();
+-                if (ImGui::Button("cancel"))
++                if (ImGui::Button("取消"))
+                 {
+                     pArrayType->Destruct(arrayInstance);
+                     pArrayType->GetAllocator()->Free(arrayInstance);
+@@ -704,7 +704,7 @@ bool TweakDBEditor::DrawFlatArray(RED4ext::TweakDBID aDBID, RED4ext::CStackType&
+                     isCached = false;
+                 }
+                 ImGui::SameLine();
+-                if (ImGui::Button("save"))
++                if (ImGui::Button("保存"))
+                 {
+                     const RED4ext::CStackType newStackType(aStackType.type, arrayInstance);
+                     isModified = TweakDB::InternalSetFlat(aDBID, newStackType);
+@@ -768,7 +768,7 @@ bool TweakDBEditor::DrawFlatArray(RED4ext::TweakDBID aDBID, RED4ext::CStackType&
+ 
+             ImGui::TableNextRow();
+             ImGui::TableNextColumn();
+-            if (!aReadOnly && ImGui::Button("add new"))
++            if (!aReadOnly && ImGui::Button("新增"))
+             {
+                 pArrayType->InsertAt(arrayInstance, arraySize);
+                 pArrayInnerType->Construct(pArrayType->GetElement(arrayInstance, arraySize));
+@@ -814,7 +814,7 @@ bool TweakDBEditor::DrawFlatTweakDBID(RED4ext::TweakDBID aDBID, RED4ext::CStackT
+             }
+             else
+             {
+-                ImGui::SetTooltipUnformatted("ERROR_RECORD_NOT_FOUND");
++                ImGui::SetTooltipUnformatted("错误：找不到记录");
+             }
+         }
+ 
+@@ -908,17 +908,17 @@ bool TweakDBEditor::DrawFlatEulerAngles(RED4ext::TweakDBID aDBID, RED4ext::CStac
+ 
+     const int32_t flags = aReadOnly ? ImGuiInputTextFlags_ReadOnly : ImGuiInputTextFlags_EnterReturnsTrue;
+ 
+-    ImGui::TextUnformatted("Roll ");
++    ImGui::TextUnformatted("横滚");
+     ImGui::SameLine();
+     ImGui::SetNextItemWidth(-FLT_MIN);
+     bool valueChanged = ImGui::InputFloat("##Roll", &roll, 0.0f, 0.0f, "%f", flags);
+ 
+-    ImGui::TextUnformatted("Pitch");
++    ImGui::TextUnformatted("俯仰");
+     ImGui::SameLine();
+     ImGui::SetNextItemWidth(-FLT_MIN);
+     valueChanged |= ImGui::InputFloat("##Pitch", &pitch, 0.0f, 0.0f, "%f", flags);
+ 
+-    ImGui::TextUnformatted("Yaw  ");
++    ImGui::TextUnformatted("偏航");
+     ImGui::SameLine();
+     ImGui::SetNextItemWidth(-FLT_MIN);
+     valueChanged |= ImGui::InputFloat("##Yaw", &yaw, 0.0f, 0.0f, "%f", flags);
+@@ -1037,7 +1037,7 @@ bool TweakDBEditor::DrawFlatColor(RED4ext::TweakDBID aDBID, RED4ext::CStackType&
+     rgba[3] = pColor->Alpha / 255.0f;
+ 
+     aReadOnly = true;
+-    ImGui::TextUnformatted("'Color' is not supported yet");
++    ImGui::TextUnformatted("暂不支持 Color 类型");
+     ImGui::SameLine();
+ 
+     const int32_t flags = aReadOnly ? ImGuiColorEditFlags_NoInputs : ImGuiColorEditFlags_None;
+@@ -1073,7 +1073,7 @@ bool TweakDBEditor::DrawFlatLocKeyWrapper(RED4ext::TweakDBID aDBID, RED4ext::CSt
+ {
+     const auto* pLocKey = static_cast<RED4ext::gamedataLocKeyWrapper*>(aStackType.value);
+ 
+-    ImGui::TextUnformatted("This is a LocalizationKey");
++    ImGui::TextUnformatted("这是一个本地化文本键");
+     ImGui::TextUnformatted("Game.GetLocalizedTextByKey(...)");
+ 
+     uint64_t key = pLocKey->primaryKey;
+@@ -1128,7 +1128,7 @@ bool TweakDBEditor::DrawFlatResourceAsyncRef(RED4ext::TweakDBID aDBID, RED4ext::
+             static int resourcesCount = 0;
+             static char comboSearchStr[256]{};
+             ImGui::SetNextItemWidth(-FLT_MIN);
+-            if (ImGui::InputTextWithHint("##dropdownSearch", "Search", comboSearchStr, sizeof(comboSearchStr)))
++            if (ImGui::InputTextWithHint("##dropdownSearch", "搜索", comboSearchStr, sizeof(comboSearchStr)))
+             {
+                 searchTimer = c_searchDelay;
+             }
+@@ -1231,7 +1231,7 @@ bool TweakDBEditor::DrawFlatCName(RED4ext::TweakDBID aDBID, RED4ext::CStackType&
+ {
+     const auto* pCName = static_cast<RED4ext::CName*>(aStackType.value);
+ 
+-    ImGui::TextUnformatted("Game is expecting specific values.");
++    ImGui::TextUnformatted("此字段需要游戏支持的特定值。");
+     // Is it worth it to implement a dropdown like DrawTweakDBID?
+ 
+     RED4ext::CName newCName;
+@@ -1383,13 +1383,13 @@ void TweakDBEditor::DrawRecordsTab()
+ {
+     static float searchTimer = 0.0f;
+     ImGui::SetNextItemWidth(
+-        -(ImGui::GetFrameHeight() + ImGui::CalcTextSize("Regex").x + ImGui::GetStyle().ItemSpacing.x + ImGui::GetStyle().ItemInnerSpacing.x + ImGui::GetStyle().FramePadding.x));
+-    if (ImGui::InputTextWithHint("##search", "Search", s_recordsFilterBuffer, sizeof(s_recordsFilterBuffer)))
++        -(ImGui::GetFrameHeight() + ImGui::CalcTextSize("正则表达式").x + ImGui::GetStyle().ItemSpacing.x + ImGui::GetStyle().ItemInnerSpacing.x + ImGui::GetStyle().FramePadding.x));
++    if (ImGui::InputTextWithHint("##search", "搜索", s_recordsFilterBuffer, sizeof(s_recordsFilterBuffer)))
+     {
+         searchTimer = c_searchDelay;
+     }
+     ImGui::SameLine();
+-    if (ImGui::Checkbox("Regex", &s_recordsFilterIsRegex))
++    if (ImGui::Checkbox("正则表达式", &s_recordsFilterIsRegex))
+     {
+         searchTimer = -1.0f;
+     }
+@@ -1454,7 +1454,7 @@ void TweakDBEditor::DrawRecordsTab()
+                             ImGui::TableNextColumn();
+                             if (flat.m_isMissing)
+                             {
+-                                ImGui::TextUnformatted("ERROR_FLAT_NOT_FOUND");
++                                ImGui::TextUnformatted("错误：找不到字段值");
+                             }
+                             else
+                             {
+@@ -1509,13 +1509,13 @@ void TweakDBEditor::DrawFlatsTab()
+ {
+     static float searchTimer = 0.0f;
+     ImGui::SetNextItemWidth(
+-        -(ImGui::GetFrameHeight() + ImGui::CalcTextSize("Regex").x + ImGui::GetStyle().ItemSpacing.x + ImGui::GetStyle().ItemInnerSpacing.x + ImGui::GetStyle().FramePadding.x));
+-    if (ImGui::InputTextWithHint("##search", "Search", s_flatsFilterBuffer, sizeof(s_flatsFilterBuffer)))
++        -(ImGui::GetFrameHeight() + ImGui::CalcTextSize("正则表达式").x + ImGui::GetStyle().ItemSpacing.x + ImGui::GetStyle().ItemInnerSpacing.x + ImGui::GetStyle().FramePadding.x));
++    if (ImGui::InputTextWithHint("##search", "搜索", s_flatsFilterBuffer, sizeof(s_flatsFilterBuffer)))
+     {
+         searchTimer = c_searchDelay;
+     }
+     ImGui::SameLine();
+-    if (ImGui::Checkbox("Regex", &s_flatsFilterIsRegex))
++    if (ImGui::Checkbox("正则表达式", &s_flatsFilterIsRegex))
+     {
+         searchTimer = -1.0f;
+     }
+@@ -1572,7 +1572,7 @@ void TweakDBEditor::DrawFlatsTab()
+                     ImGui::TableNextColumn();
+                     if (flat.m_isMissing)
+                     {
+-                        ImGui::TextUnformatted("ERROR_FLAT_NOT_FOUND");
++                        ImGui::TextUnformatted("错误：找不到字段值");
+                     }
+                     else
+                     {
+@@ -1594,15 +1594,15 @@ void TweakDBEditor::DrawFlatsTab()
+ void TweakDBEditor::DrawAdvancedTab()
+ {
+ 
+-    if (ImGui::InputScalar("'Flats' Grouping depth", ImGuiDataType_S8, &m_flatGroupNameDepth, nullptr, nullptr, nullptr, ImGuiInputTextFlags_EnterReturnsTrue))
++    if (ImGui::InputScalar("字段值分组层级", ImGuiDataType_S8, &m_flatGroupNameDepth, nullptr, nullptr, nullptr, ImGuiInputTextFlags_EnterReturnsTrue))
+     {
+         RefreshFlats();
+         FilterFlats();
+     }
+ 
+-    ImGui::InputFloat("ComboBox dropdown height", &g_comboDropdownHeight, 0, 0);
++    ImGui::InputFloat("下拉列表高度", &g_comboDropdownHeight, 0, 0);
+ 
+-    if (ImGui::Button("Refresh all"))
++    if (ImGui::Button("刷新全部"))
+     {
+         // prompt widget reinitialization
+         m_initialized = false;
+@@ -1623,20 +1623,20 @@ void TweakDBEditor::DrawAdvancedTab()
+             statusTimer = 2.5f;
+         };
+ 
+-        ImGui::InputText("Record name", recordName, sizeof(recordName));
++        ImGui::InputText("记录名称", recordName, sizeof(recordName));
+ 
+-        if (ImGui::Button("Delete Record"))
++        if (ImGui::Button("删除记录"))
+         {
+             if (TweakDB::InternalDeleteRecord(RED4ext::TweakDBID(recordName), spdlog::get("scripting")))
+-                SetStatus("Success!");
++                SetStatus("操作成功！");
+             else
+-                SetStatus("Failed. check console!");
++                SetStatus("操作失败，请查看控制台！");
+         }
+ 
+-        if (ImGui::BeginCombo("Record type to create", recordTypeName.ToString(), ImGuiComboFlags_HeightLargest))
++        if (ImGui::BeginCombo("新记录的类型", recordTypeName.ToString(), ImGuiComboFlags_HeightLargest))
+         {
+             ImGui::SetNextItemWidth(-FLT_MIN);
+-            ImGui::InputTextWithHint("##dropdownSearch", "Search", comboSearchBuffer, sizeof(comboSearchBuffer));
++            ImGui::InputTextWithHint("##dropdownSearch", "搜索", comboSearchBuffer, sizeof(comboSearchBuffer));
+             if (ImGui::BeginChild("##dropdownScroll", ImVec2(0, g_comboDropdownHeight)))
+             {
+                 for (const auto& recordGroup : m_cachedRecords)
+@@ -1663,22 +1663,22 @@ void TweakDBEditor::DrawAdvancedTab()
+             ImGui::EndCombo();
+         }
+ 
+-        if (ImGui::Button("Create record"))
++        if (ImGui::Button("创建记录"))
+         {
+             if (TweakDB::InternalCreateRecord(recordName, recordTypeName.ToString(), spdlog::get("scripting")))
+-                SetStatus("Success!");
++                SetStatus("操作成功！");
+             else
+-                SetStatus("Failed. check console!");
++                SetStatus("操作失败，请查看控制台！");
+         }
+ 
+-        DrawRecordDropdown("Record to clone", clonedRecordDBID);
++        DrawRecordDropdown("待复制的记录", clonedRecordDBID);
+ 
+-        if (ImGui::Button("Clone record"))
++        if (ImGui::Button("复制记录"))
+         {
+             if (TweakDB::InternalCloneRecord(recordName, clonedRecordDBID, spdlog::get("scripting")))
+-                SetStatus("Success!");
++                SetStatus("操作成功！");
+             else
+-                SetStatus("Failed. check console!");
++                SetStatus("操作失败，请查看控制台！");
+         }
+ 
+         if (statusTimer != 0.0f)
+diff --git a/xmake.lua b/xmake.lua
+index 20de082..1062ea3 100644
+--- a/xmake.lua
++++ b/xmake.lua
+@@ -6,7 +6,7 @@ set_arch("x64")
+ add_rules("mode.debug","mode.releasedbg", "mode.release")
+ add_rules("c.unity_build")
+ 
+-add_cxflags("/bigobj", "/MP", "/EHsc")
++add_cxflags("/utf-8", "/bigobj", "/MP", "/EHsc")
+ add_defines("UNICODE", "_UNICODE", "_CRT_SECURE_NO_WARNINGS")
+ 
+ if is_mode("debug") then

@@ -1,0 +1,25 @@
+[
+  {
+    "path": "archive/pc/mod/zz_codex_qol_zh.archive",
+    "sha256": "0af63953a3a23bf30011ca5eff87e9730c97611699d5318a50edea402c8236ce",
+    "accepted_original_sha256": [
+      null
+    ]
+  },
+  {
+    "path": "archive/pc/mod/zz_codex_qol_zh.archive.xl",
+    "sha256": "d49da9c8ec40377f42f5c6972369f3fef00579c36bd0d38f684c691aa277416f",
+    "accepted_original_sha256": [
+      null
+    ]
+  },
+  {
+    "path": "bin/x64/plugins/cyber_engine_tweaks.asi",
+    "sha256": "824e881addf552d17939deb2d081b8b1b901421fb22a98cf92bc6e689951bc4a",
+    "accepted_original_sha256": [
+      "acb12b25cfcf77c3f5a84df7cd4f4ae5074b8269e7c7389f349e12b237f88d6e",
+      "f0acdad154bd0033583e0f6e675ea18b4bdb60cda28133d792a4674e6d7f228a",
+      "30b46214e5a8653742624f7cd80e72e202838a1b296ab1e6ea7b8a05ce7e1707"
+    ]
+  }
+]

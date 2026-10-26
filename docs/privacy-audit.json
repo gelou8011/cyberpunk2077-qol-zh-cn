@@ -1,0 +1,11 @@
+{
+  "scan_scope": "Every staged blob, including binary UTF-8 and UTF-16 strings",
+  "staged_files_scanned": 27,
+  "personal_identifier_or_path_findings": 0,
+  "credential_pattern_findings": 0,
+  "excluded_artifact_findings": 0,
+  "public_upstream_license_contact_occurrences_retained": 3,
+  "noreply_commit_identity_verified": true,
+  "staged_payload_hashes_match": true,
+  "clean": true
+}
